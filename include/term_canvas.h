@@ -38,7 +38,7 @@ void set_pixel(struct Canvas c, int x, int y, int t)
 	c.buffer[y * c.width + x] = t;
 }
 void draw_canvas(struct Canvas c)
-	/* This function Draw the canvas buffer *
+	/* This function draws the canvas buffer *
 	 * the standard output as braille ..... *
 	 * characters. ........................ */
 {
@@ -53,7 +53,7 @@ void draw_canvas(struct Canvas c)
 	}
 }
 void free_canvas(struct Canvas c)
-	/* This functions free the *
+	/* This functions frees the *
 	 * canvas buffer. ........ */
 {
 	free(c.buffer);
