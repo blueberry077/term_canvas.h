@@ -31,11 +31,37 @@ struct Canvas new_canvas(size_t w, size_t h)
 	};
 	return ret;
 }
-void set_pixel(struct Canvas c, int x, int y, int t)
+void draw_rectangle(struct Canvas c, size_t x, size_t y, size_t w, size_t h, int t)
+	/* This functions draws *
+	 * a rectangle on the . *
+	 * canvas. ............ */
+{
+	for (size_t _y = 0; _y < h; ++_y) {
+		for (size_t _x = 0; _x < w; ++_x) {
+			set_pixel(c, x + _x, y + _y, t);
+		}
+	}
+}
+void draw_circle(struct Canvas c, int x, int y, int r, int t)
+	/* This functions draws *
+	 * a circle on the .... *
+	 * canvas. ............ */
+{
+	for (int _y = -r; _y < r; ++_y) {
+		for (int _x = -r; _x < r; ++_x) {
+			if (_x*_x + _y*_y < r*r) {
+				set_pixel(c, x+r+_x, y+r+_y, t);
+			}
+		}
+	}
+}
+void set_pixel(struct Canvas c, size_t x, size_t y, int t)
 	/* This function places a pixel *
 	 * in the canvas buffer. ...... */
 {
-	c.buffer[y * c.width + x] = t;
+	if ((x > 0) && (x < c.width) && (y > 0) && (y < c.height)) {
+		c.buffer[y * c.width + x] = t;
+	}
 }
 void draw_canvas(struct Canvas c)
 	/* This function draws the canvas buffer *
