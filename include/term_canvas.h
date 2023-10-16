@@ -25,7 +25,7 @@ void set_terminal_mode(void)
 #ifdef _WIN32
   _setmode(_fileno(stdout), 0x00020000);
 #else
-  setlocale(LC_ALL, "en_US.UTF-16");
+  setlocale(LC_ALL, "en_US.UTF-8");
 #endif
 }
 struct Canvas new_canvas(size_t w, size_t h)
@@ -40,19 +40,39 @@ struct Canvas new_canvas(size_t w, size_t h)
   return ret;
 }
 
-void draw_full_triangle(struct Canvas c, size_t x, size_t y, size_t height,
-                        int t) {
-  size_t pyramid_width = height * 2 - 1;
-  size_t half_width = pyramid_width / 2;
+void draw_line(struct Canvas c, size_t x1, size_t y1, size_t x2, size_t y2,
+               int t) {
+  int dx = abs((int)x2 - (int)x1);
+  int sx = x1 < x2 ? 1 : -1;
+  int dy = -abs((int)y2 - (int)y1);
+  int sy = y1 < y2 ? 1 : -1;
+  int err = dx + dy;
+  int e2;
 
-  for (size_t i = 0; i < height; i++) {
-    for (size_t j = 0; j < half_width - i; j++) {
-      set_pixel(c, x + j, y + i, !t);
+  while (1) {
+    set_pixel(c, x1, y1, t);
+
+    if (x1 == x2 && y1 == y2) {
+      break;
     }
-    for (size_t j = half_width - i; j <= half_width + i; j++) {
-      set_pixel(c, x + j, y + i, t);
+
+    e2 = 2 * err;
+    if (e2 >= dy) {
+      err += dy;
+      x1 += sx;
+    }
+    if (e2 <= dx) {
+      err += dx;
+      y1 += sy;
     }
   }
+}
+
+void draw_full_triangle(struct Canvas c, int x1, int y1, int x2, int y2, int x3,
+                        int y3, int t) {
+  draw_line(c, x1, y1, x2, y2, t);
+  draw_line(c, x2, y2, x3, y3, t);
+  draw_line(c, x3, y3, x1, y1, t);
 }
 
 void draw_rectangle(struct Canvas c, size_t x, size_t y, size_t w, size_t h,
