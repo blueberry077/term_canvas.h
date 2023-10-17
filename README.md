@@ -30,3 +30,4 @@ int main(void)
 }
 ```
 ![box exemple](images/box_exemple.png)
+The docs can be found here [box exemple](docs/docs)!
