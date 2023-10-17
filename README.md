@@ -1,6 +1,7 @@
 # Terminal Canvas
 Terminal Canvas is a C library that uses braille  
 to display pixel on the terminal. **WORK IN PROGRESS**
+The docs can be found [here](./docs/docs.md)!
 ## Quickstart
 ```bash
 > make.bat
@@ -30,4 +31,4 @@ int main(void)
 }
 ```
 ![box exemple](images/box_exemple.png)
-The docs can be found [here](./docs/docs.md)!
+
