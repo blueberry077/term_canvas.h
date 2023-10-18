@@ -8,7 +8,6 @@
 /* Entry Point .............. */
 int main(void)
 {
-	srand(time(NULL));
 	struct Canvas canvas = new_canvas(320, 240);
 	set_terminal_mode();
 	draw_rectangle(canvas, 0, 0, canvas.width, canvas.height, 1);
