@@ -1,164 +1,139 @@
 # term canvas library docs 
 ___
 
-## Structs 
-___
-
+## // Structures
 ### Canvas: The canvas that the library uses
-| Name   | Type     | Description              |
-|--------|----------|--------------------------|
-| width  | `size_t` | The width of the canvas  |
-| height | `size_t` | The height of the canvas |
-| buffer | `int *`  | The actual canvas data   |
-
+```c
+struct Canvas {
+    size_t	height; // As to be a multiple of 4
+    size_t	width;  // As to be a multiple of 2
+    int	*	buffer;
+    int *	attr;	// Color Buffer Attr
+};
+```
+#### Others
+```c
+struct Vec2 { float x, y; }; // 2D Point
+struct SIZE { int w, h; };
+```
 ---
-## Functions
-___
-
-### set_terminal_mode: Sets the terminal mode to UTF-16 mode
-
-#### Parameters
-void
-
-#### Returns
-void
+## // Functions
+```c
+struct Canvas set_terminal_mode(void);
+```
+Sets the terminal mode to UTF-16 mode
 
 ___
-
-### new_canvas: Creates a new canvas
-
-#### Parameters
-| Name | Type     | Description              |
-|------|----------|--------------------------|
-| w    | `size_t` | The height of the canvas |
-| h    | `size_t` | The width of the canvas  |
-
-#### Returns
-Struct canvas
-
+```c
+struct Canvas new_canvas(
+    struct SIZE size
+);
+```
+Creates a new canvas
 ___
-
-### draw_line: Draws a line
-
-#### Parameters
-| Name | Type            | Description                                    |
-|------|-----------------|------------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into      |
-| x1   | `size_t`        |                                                |
-| y1   | `size_t`        |                                                |
-| x2   | `size_t`        |                                                |
-| y2   | `size_t`        |                                                |
-| t    | `int`           | The char that needed to be drawn on the canvas |
-
-#### Returns
- void
-______
-
-### draw_full_line: Draws a line
-
-#### Parameters
-| Name | Type            | Description                                    |
-|------|-----------------|------------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into      |
-| x1   | `size_t`        |                                                |
-| y1   | `size_t`        |                                                |
-| x2   | `size_t`        |                                                |
-| y2   | `size_t`        |                                                |
-| x3   | `size_t`        |                                                |
-| y3   | `size_t`        |                                                |
-| t    | `int`           | The char that needed to be drawn on the canvas |
-
-#### Returns
- void
+```c
+void set_pixel(
+    struct Canvas c,
+    struct Vec2 pos,
+    enum CANVAS_TINT t
+);
+```
+Sets a pixel in the canvas
 ___
+```c
+void set_color(
+    struct Canvas c,
+    struct Vec2 pos,
+    int fc,
+    int bg
+);
+```
+Sets a color in the canvas
 ___
-
-### draw_rectangle: Draws a draw_rectangle
-
-#### Parameters
-| Name | Type            | Description                                    |
-|------|-----------------|------------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into      |
-| x    | `size_t`        |                                                |
-| y    | `size_t`        |                                                |
-| w    | `size_t`        |                                                |
-| h    | `size_t`        |                                                |
-| t    | `int`           | The char that needed to be drawn in the canvas |
-
-#### Returns
- void
+```c
+void draw_line(
+    struct Canvas c,
+    struct Vec2 pos1,
+    struct Vec2 pos2,
+    int fc,
+    int bg,
+    enum CANVAS_TINT t
+);
+```
+Draws a line
 ___
+```c
+void draw_wire_frame_triangle(
+    struct Canvas c,
+    struct Vec2 pos1,
+    struct Vec2 pos2,
+    struct Vec2 pos3,
+    int fg,
+    int bg,
+    enum CANVAS_TINT t
+);
+```
+Draws a wire frame triangles
+```c
+void draw_fill_triangle(
+    struct Canvas c,
+    struct Vec2 pos1,
+    struct Vec2 pos2,
+    struct Vec2 pos3,
+    int fg,
+    int bg,
+    enum CANVAS_TINT t
+);
+```
+Draw a filled triangle
 ___
-
-### draw_rectangle: Draws a draw_rectangle
-
-#### Parameters
-| Name | Type            | Description                                    |
-|------|-----------------|------------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into      |
-| x    | `size_t`        |                                                |
-| y    | `size_t`        |                                                |
-| w    | `size_t`        |                                                |
-| h    | `size_t`        |                                                |
-| t    | `int`           | The char that needed to be drawn in the canvas |
-
-#### Returns
- void
+```c
+void draw_rectangle(
+    struct Canvas c,
+    struct Vec2 pos,
+    struct SIZE size,
+    size_t fg,
+    size_t bg,
+    enum CANVAS_TINT t
+);
+```
+Draws a rectangle
 ___
+```c
+void draw_circle(
+    struct Canvas c,
+    struct Vec2 pos,
+    int r,
+    int fg,
+    int bg,
+    enum CANVAS_TINT t
+);
+```
+Draws a Circle
 ___
-
-### draw_circle: Draws a circle
-
-#### Parameters
-| Name | Type            | Description                                    |
-|------|-----------------|------------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into      |
-| x    | `size_t`        |                                                |
-| y    | `size_t`        |                                                |
-| r    | `size_t`        |                                                |
-| t    | `int`           | The char that needed to be drawn in the canvas |
-
-#### Returns
- void
+```c
+void clear_canvas(
+    struct Canvas c,
+    int fg,
+    int bg,
+    enum CANVAS_TINT t
+);
+```
+Fills the canvas with a color
 ___
+```c
+void draw_canvas(
+    struct Canvas c
+);
+```
+Prints the buffer to the terminal
 ___
-
-### set_pixel: Sets a pixel in the canvas
-
-#### Parameters
-| Name | Type            | Description                                  |
-|------|-----------------|----------------------------------------------|
-| c    | `Struct Canvas` | The canvas that this should be added into    |
-| x    | `size_t`        |                                              |
-| y    | `size_t`        |                                              |
-| t    | `int`           | The char that needed to be set in the canvas |
-
-#### Returns
- void
-___
-___
-
-### draw_canvas: Prints the canvas to the screen
-
-#### Parameters
-| Name | Type            | Description                            |
-|------|-----------------|----------------------------------------|
-| c    | `Struct Canvas` | The canvas that is going to be printed |
-
-#### Returns
- void
-___
-___
-
-### free_canvas: Frees the memory that a canvas is using
-
-#### Parameters
-| Name | Type            | Description                          |
-|------|-----------------|--------------------------------------|
-| c    | `Struct Canvas` | The canvas that is going to be freed |
-
-#### Returns
- void
+```c
+void free_canvas(
+    struct Canvas c
+);
+```
+Frees the allocated memory that a canvas uses
 ___
 
 
