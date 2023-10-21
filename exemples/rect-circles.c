@@ -8,15 +8,16 @@
 /* Entry Point .............. */
 int main(void)
 {
-	struct Canvas canvas = new_canvas(320, 240);
+	srand(time(NULL));
+	struct Canvas canvas = new_canvas((struct SIZE){ 320, 240 });
 	set_terminal_mode();
-	draw_rectangle(canvas, 0, 0, canvas.width, canvas.height, 1);
-	draw_rectangle(canvas, 3, 3, canvas.width-5, canvas.height-5, 0);
-	draw_rectangle(canvas, 5, 5, canvas.width-9, (canvas.height-9)/2-1, 1);
-	draw_rectangle(canvas, 5, (canvas.height)/2+1, (canvas.width-9)/2-1, (canvas.height-9)/2, 1);
-	draw_rectangle(canvas, 5+(canvas.width-9)/2+1, (canvas.height)/2+1, (canvas.width-9)/2, (canvas.height-9)/2, 1);
-	draw_circle(canvas, (canvas.width/2)-20, (canvas.height/2)-20, 20, 0);
-	draw_circle(canvas, (canvas.width/2)-10, (canvas.height/2)-10, 10, 1);
+	draw_rectangle(canvas, (struct Vec2){ 0, 0 }, 										 (struct SIZE){ canvas.width, canvas.height }, 				  DEFAULT, DEFAULT, CANVAS_TINT_FILL);
+	draw_rectangle(canvas, (struct Vec2){ 3, 3 }, 										 (struct SIZE){ canvas.width-5, canvas.height-5 }, 			  DEFAULT, DEFAULT, CANVAS_TINT_BLANK);
+	draw_rectangle(canvas, (struct Vec2){ 5, 5 }, 										 (struct SIZE){ canvas.width-9, (canvas.height-9)/2-1 },      DEFAULT, DEFAULT, CANVAS_TINT_FILL);
+	draw_rectangle(canvas, (struct Vec2){ 5, (canvas.height)/2+1 }, 					 (struct SIZE){ (canvas.width-9)/2-1, (canvas.height-9)/2 },  DEFAULT, DEFAULT, CANVAS_TINT_FILL);
+	draw_rectangle(canvas, (struct Vec2){ 5+(canvas.width-9)/2+1, (canvas.height)/2+1 }, (struct SIZE){ (canvas.width-9)/2, (canvas.height-9)/2 },    DEFAULT, DEFAULT, CANVAS_TINT_FILL);
+	draw_circle(canvas, (struct Vec2){ (canvas.width/2)-20, (canvas.height/2)-20 }, 20, DEFAULT, DEFAULT, CANVAS_TINT_BLANK);
+	draw_circle(canvas, (struct Vec2){ (canvas.width/2)-10, (canvas.height/2)-10 }, 10, DEFAULT, DEFAULT, CANVAS_TINT_FILL);
 	draw_canvas(canvas);
 	wprintf(L"[ DBG ] Program Ended\n");
 	free_canvas(canvas);
