@@ -7,12 +7,12 @@
 
 int main(void)
 {
-	struct Canvas canvas = new_canvas(20, 20);
+	struct Canvas canvas = new_canvas((struct SIZE){ 20, 20 });
 	set_terminal_mode();
-	for (size_t y = 0; y < 20; ++y) {
-		for (size_t x = 0; x < 20; ++x) {
-			if ((x == 0 || x == 19) || (y == 0 || y == 19))
-			set_pixel(canvas, x, y, 1);
+	for (int y = 0; y < 20; ++y) {
+		for (int x = 0; x < 20; ++x) {
+			if ((x == 1 || x == 19) || (y == 1 || y == 19))
+				set_pixel(canvas, (struct Vec2){ x, y }, CANVAS_TINT_FILL);
 		}
 	}
 	draw_canvas(canvas);
